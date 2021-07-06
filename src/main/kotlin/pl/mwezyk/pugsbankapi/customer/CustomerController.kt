@@ -1,6 +1,7 @@
 package pl.mwezyk.pugsbankapi.customer
 
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -13,5 +14,9 @@ class CustomerController(val customerService: CustomerService) {
         return customerService.getAllCustomers()
     }
 
+    @GetMapping("/{customerId}")
+    fun getCustomer(@PathVariable customerId: String): Customer {
+        return customerService.getCustomerById(customerId.toLong())
+    }
 
 }

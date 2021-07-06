@@ -1,5 +1,5 @@
 package pl.mwezyk.pugsbankapi.currency
 
-enum class Currency {
+enum class CurrencyCode {
     USD
 }

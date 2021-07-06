@@ -1,21 +1,25 @@
 package pl.mwezyk.pugsbankapi.currency
 
 import lombok.extern.slf4j.Slf4j
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.*
+import org.springframework.context.annotation.PropertySource
+import org.springframework.http.HttpEntity
+import org.springframework.http.HttpHeaders
+import org.springframework.http.HttpMethod
+import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
 
 @Component
 @Slf4j
+@PropertySource("classpath:application.properties")
 class NbpCurrencyClient(var restTemplate: RestTemplate) {
 
     private val NBP_REST_URL = "http://api.nbp.pl/api/exchangerates/rates/a/"
 
-    fun getExchangeRate(currency: Currency): NbpCurrencyExchangeResponse? {
+    fun getExchangeRate(currencyCode: CurrencyCode): NbpCurrencyExchangeResponse? {
         val response = this.restTemplate
             .exchange(
-                createUrl(currency),
+                createUrl(currencyCode),
                 HttpMethod.GET,
                 HttpEntity<Any?>(getHeaders()),
                 NbpCurrencyExchangeResponse::class.java
@@ -24,8 +28,8 @@ class NbpCurrencyClient(var restTemplate: RestTemplate) {
         return response.body
     }
 
-    private fun createUrl(currency: Currency): String {
-        return NBP_REST_URL + currency.name
+    private fun createUrl(currencyCode: CurrencyCode): String {
+        return NBP_REST_URL + currencyCode.name
     }
 
     private fun getHeaders(): HttpHeaders {

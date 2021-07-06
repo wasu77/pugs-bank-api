@@ -3,10 +3,11 @@ package pl.mwezyk.pugsbankapi.customer
 import org.springframework.data.jdbc.repository.query.Query
 import org.springframework.data.repository.CrudRepository
 
-interface CustomerRepository : CrudRepository<Customer, String> {
+interface CustomerRepository : CrudRepository<CustomerEntity, String> {
 
     @Query("SELECT * FROM CUSTOMERS")
-    fun getAllCustomers(): List<Customer>
+    fun getAllCustomers(): List<CustomerEntity>
 
-    fun getCustomerById(id: Long): Customer
+    @Query("SELECT * FROM CUSTOMERS WHERE ID = :id")
+    fun getCustomerEntityByIdEquals(id: Long): CustomerEntity
 }
