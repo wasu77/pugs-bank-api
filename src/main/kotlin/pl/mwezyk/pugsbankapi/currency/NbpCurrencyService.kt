@@ -25,6 +25,6 @@ class NbpCurrencyService(currencyClient: NbpCurrencyClient) : CurrencyService {
         return exchangeRate.toDouble()
     }
 
-    private class EmptyExchangeRatesException(message: String): RuntimeException(message)
+    class EmptyExchangeRatesException(message: String): RuntimeException(message)
 
 }

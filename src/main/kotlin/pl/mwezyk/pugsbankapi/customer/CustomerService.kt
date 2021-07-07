@@ -14,7 +14,7 @@ class CustomerService(val repository: CustomerRepository, val currencyService: C
         return mapToCustomer(repository.getCustomerEntityByIdEquals(customerId))
     }
 
-    fun mapToCustomer(customerEntity: CustomerEntity): Customer {
+    private fun mapToCustomer(customerEntity: CustomerEntity): Customer {
         return Customer(customerEntity.id, customerEntity.name, currencyService.convertToCurrency(customerEntity.balance))
     }
 
