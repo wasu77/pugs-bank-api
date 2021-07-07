@@ -12,7 +12,7 @@ class NbpCurrencyService(currencyClient: NbpCurrencyClient) : CurrencyService {
 
     override fun convertToCurrency(amount: Long, currencyCode: CurrencyCode): String {
         val inDollars = amount.div(CENTS_IN_DOLLAR).div(getExchangeRate())
-        val format = NumberFormat.getCurrencyInstance()
+        val format = NumberFormat.getCurrencyInstance(Locale.US)
             format.maximumFractionDigits = 2
             format.currency = Currency.getInstance(CurrencyCode.USD.name)
         return format.format(inDollars)
