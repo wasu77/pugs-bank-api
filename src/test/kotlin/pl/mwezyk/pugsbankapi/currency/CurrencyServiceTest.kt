@@ -2,17 +2,21 @@ package pl.mwezyk.pugsbankapi.currency
 
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
 import org.mockito.kotlin.eq
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 import java.lang.RuntimeException
+import java.util.stream.Stream
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 
 class CurrencyServiceTest {
 
-    private val DOLLAR_EXCHANGE_RATE = "4.12"
+    private val DOLLAR_EXCHANGE_RATE = "4.00"
 
     @Test
     fun givenCurrencyCode_whenCallToCurrencyClient_thenReturnExchangeRate() {
@@ -37,7 +41,39 @@ class CurrencyServiceTest {
         assertFailsWith<RuntimeException> {
             currencyService.getExchangeRate()
         }
+    }
 
+    @Test
+    fun givenCurrencyCode_whenCurrencyClientReturnsEmpty_thenAssertCustomExceptionThrows() {
+        val currencyClientMock: NbpCurrencyClient = mock()
+        whenever(currencyClientMock.getExchangeRate(eq(CurrencyCode.USD))).thenReturn(null)
+
+        val currencyService = NbpCurrencyService(currencyClientMock)
+
+        assertFailsWith<NbpCurrencyService.EmptyExchangeRatesException> {
+            currencyService.getExchangeRate()
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideAccountBalanceInPolishGroszeAndExpectedAmountInDollars")
+    fun givenExchangeRateAndAccountBalance_whenConvertToCurrency_assertExpectedAmount(amount: Long, expectedAmount: String) {
+        val currencyClientMock: NbpCurrencyClient = mock()
+        whenever(currencyClientMock.getExchangeRate(eq(CurrencyCode.USD))).thenReturn(provideCurrencyRate())
+
+        val currencyService = NbpCurrencyService(currencyClientMock)
+
+        val convertedAmount = currencyService.convertToCurrency(amount)
+        assertEquals(expectedAmount, convertedAmount)
+    }
+
+    private companion object {
+        @JvmStatic
+        fun provideAccountBalanceInPolishGroszeAndExpectedAmountInDollars() = Stream.of(
+            Arguments.of(10000, "$25.00"),
+            Arguments.of(0, "$0.00"),
+            Arguments.of(-1000, "-$2.50")
+        )
     }
 
     private fun provideCurrencyRate(): NbpCurrencyExchangeResponse {
