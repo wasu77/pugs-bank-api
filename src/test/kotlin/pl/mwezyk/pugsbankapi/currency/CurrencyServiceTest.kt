@@ -16,7 +16,7 @@ import kotlin.test.assertNotNull
 
 class CurrencyServiceTest {
 
-    private val DOLLAR_EXCHANGE_RATE = "4.00"
+    private val DOLLAR_EXCHANGE_RATE = "4.0"
 
     @Test
     fun givenCurrencyCode_whenCallToCurrencyClient_thenReturnExchangeRate() {

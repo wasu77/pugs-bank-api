@@ -1,9 +1,7 @@
 ### Fetch all customers
-
-GET localhost:8080/customers
+GET {{api-url}}/customers
 Content-Type: application/json
 
 ### Fetch customer with given customerId
-
-GET localhost:8080/customers/1
+GET {{api-url}}/customers/{{customerId}}}}
 Content-Type: application/json
