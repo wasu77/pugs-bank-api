@@ -28,7 +28,7 @@ class CurrencyServiceTest {
         val exchangeRate = currencyService.getExchangeRate()
 
         assertNotNull(exchangeRate)
-        assertEquals(DOLLAR_EXCHANGE_RATE, exchangeRate.toString())
+        assertEquals(DOLLAR_EXCHANGE_RATE, exchangeRate)
     }
 
     @Test
@@ -72,12 +72,12 @@ class CurrencyServiceTest {
         fun provideAccountBalanceInPolishGroszeAndExpectedAmountInDollars() = Stream.of(
             Arguments.of(10000, "$25.00"),
             Arguments.of(100, "$0.25"),
-            Arguments.of(50, "$0.12"),
+            Arguments.of(50, "$0.13"),
             Arguments.of(10, "$0.03"),
             Arguments.of(5, "$0.01"),
             Arguments.of(0, "$0.00"),
             Arguments.of(-5, "-$0.01"),
-            Arguments.of(-50, "-$0.12"),
+            Arguments.of(-50, "-$0.13"),
             Arguments.of(-100, "-$0.25"),
             Arguments.of(-1000, "-$2.50")
         )
