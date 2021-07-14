@@ -3,5 +3,5 @@ GET {{api-url}}/customers
 Content-Type: application/json
 
 ### Fetch customer with given customerId
-GET {{api-url}}/customers/{{customerId}}}}
+GET {{api-url}}/customers/{{customer-id}}
 Content-Type: application/json
