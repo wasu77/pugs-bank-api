@@ -1,3 +1,4 @@
+/*
 package pl.mwezyk.pugsbankapi.currency;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
@@ -47,3 +48,4 @@ public class NbpCurrencyExchangeResponse {
 
     }
 }
+*/

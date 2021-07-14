@@ -84,15 +84,8 @@ class CurrencyServiceTest {
     }
 
     private fun provideCurrencyRate(): NbpCurrencyExchangeResponse {
-        val response = NbpCurrencyExchangeResponse()
-        val rate = NbpCurrencyExchangeResponse.CurrencyRate()
-        rate.setExchangeRate(DOLLAR_EXCHANGE_RATE)
-
-        val currencyRates = NbpCurrencyExchangeResponse.CurrencyRates()
-        currencyRates.setCurrencyRate(rate)
-
-        response.setRates(listOf(currencyRates))
-        return response
+        val currencyRates = CurrencyRates(CurrencyRate(DOLLAR_EXCHANGE_RATE))
+        return NbpCurrencyExchangeResponse(CurrencyCode.USD.name, listOf(currencyRates))
     }
 
 }
