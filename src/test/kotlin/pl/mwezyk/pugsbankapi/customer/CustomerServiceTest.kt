@@ -23,7 +23,7 @@ class CustomerServiceTest {
         val customers = customerService.getAllCustomers()
 
         assertEquals(1, customers.size)
-        assertEquals("200", customers.first().accountBalance)
+        assertEquals("200", customers.first().balance)
 
         verify(repositoryMock).getAllCustomers()
     }

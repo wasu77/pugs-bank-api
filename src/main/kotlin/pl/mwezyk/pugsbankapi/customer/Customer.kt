@@ -1,3 +1,3 @@
 package pl.mwezyk.pugsbankapi.customer
 
-data class Customer(val customerId: Long, val customerName: String, val accountBalance: String)
+data class Customer(val id: Long, val name: String, val balance: String)

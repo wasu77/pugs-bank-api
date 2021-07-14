@@ -1,4 +1,4 @@
-INSERT INTO customers (id, cust_name, balance)
+INSERT INTO customers (id, name, balance)
 VALUES
        (1, 'John Doe', 1000000000),
        (2, 'Harry Kane', 70000000),
